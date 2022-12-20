@@ -1,0 +1,126 @@
+From: Dima Kogan <dkogan@debian.org>
+Date: Fri, 31 Jan 2020 00:55:26 +0100
+Subject: 0003-If-building-with-double-precision-namespace-all-libr
+
+I want to produce libraries with different filenames if we're building
+double-precision-enabled libraries. This makes it possible to ship both builds
+to the users, and to let them decide which they want based on the filename. I do
+this by overriding the CMake library-defining and library-using functions
+(add_library, target_link_libraries, ...) to add a suffix to the
+double-precision libraries
+---
+ CMakeLists.txt  | 83 ++++++++++++++++++++++++++++++++++++++++++++++++++++++---
+ bullet.pc.cmake |  2 +-
+ 2 files changed, 81 insertions(+), 4 deletions(-)
+
+diff --git a/CMakeLists.txt b/CMakeLists.txt
+index 5a460ee..55e62ea 100644
+--- a/CMakeLists.txt
++++ b/CMakeLists.txt
+@@ -1,4 +1,81 @@
+-cmake_minimum_required(VERSION 2.4.3)
++cmake_minimum_required(VERSION 3.3)
++
++# I want to produce libraries with different filenames if we're building
++# double-precision-enabled libraries. This makes it possible to ship both builds
++# to the users, and to let them decide which they want based on the filename. I
++# do this by overriding the CMake library-defining and library-using functions
++# (add_library, target_link_libraries, ...) to add a suffix to the
++# double-precision libraries
++IF (USE_DOUBLE_PRECISION)
++  set( lib_type_suffix "-float64" )
++else()
++  set( lib_type_suffix "" )
++endif()
++set( libs_in_this_project 
++  "BulletRobotics"
++  "ConvexDecomposition"
++  "GIMPACTUtils"
++  "GIMPACTUtilsHACD"
++  "BlenderSerialize"
++  "BulletFileLoader"
++  "BulletDNA"
++  "Bullet3Collision"
++  "Bullet3Common"
++  "Bullet3Dynamics"
++  "Bullet3Geometry"
++  "Bullet3OpenCL_clew"
++  "Bullet2FileLoader"
++  "BulletCollision"
++  "BulletDynamics"
++  "BulletInverseDynamics"
++  "BulletSoftBody"
++  "LinearMath"
++  "BulletInverseDynamicsUtils"
++  "BulletWorldImporter"
++  "BulletXmlWorldImporter"
++  "HACD"
++  )
++function(add_library)
++  SET( _lib_here ${ARGV0} )
++  LIST(REMOVE_AT ARGN 0)
++  _add_library("${_lib_here}${lib_type_suffix}" ${ARGN})
++endfunction()
++function(SET_TARGET_PROPERTIES)
++  SET( _lib_here ${ARGV0} )
++  LIST(REMOVE_AT ARGN 0)
++  _SET_TARGET_PROPERTIES("${_lib_here}${lib_type_suffix}" ${ARGN})
++endfunction()
++function(TARGET_LINK_LIBRARIES)
++  SET(_libs_suffixed "")
++  FOREACH(f ${ARGN})
++    if (${f} IN_LIST libs_in_this_project)
++      LIST(APPEND _libs_suffixed "${f}${lib_type_suffix}")
++    else()
++      LIST(APPEND _libs_suffixed "${f}")
++    endif()
++  ENDFOREACH(f)
++  _TARGET_LINK_LIBRARIES(${_libs_suffixed})
++endfunction()
++function(INSTALL)
++  SET(_install_args "")
++  FOREACH(f ${ARGN})
++    if (${f} IN_LIST libs_in_this_project)
++      LIST(APPEND _install_args "${f}${lib_type_suffix}")
++    else()
++      LIST(APPEND _install_args "${f}")
++    endif()
++  ENDFOREACH(f)
++  _INSTALL(${_install_args})
++endfunction()
++
++
++
++
++
++
++
++
++
+ set(CMAKE_ALLOW_LOOSE_LOOP_CONSTRUCTS true)
+ cmake_policy(SET CMP0017 NEW)
+ #this line has to appear before 'PROJECT' in order to be able to disable incremental linking
+@@ -468,10 +545,10 @@ IF(INSTALL_LIBS)
+ 	SET(INCLUDE_INSTALL_DIR "include/bullet/" CACHE PATH "The subdirectory to the header prefix")
+ 	SET(PKGCONFIG_INSTALL_PREFIX "lib${LIB_SUFFIX}/pkgconfig/" CACHE STRING "Base directory for pkgconfig files")
+ 	IF(NOT MSVC)
+-	  CONFIGURE_FILE(${CMAKE_CURRENT_SOURCE_DIR}/bullet.pc.cmake ${CMAKE_CURRENT_BINARY_DIR}/bullet.pc @ONLY)
++	  CONFIGURE_FILE(${CMAKE_CURRENT_SOURCE_DIR}/bullet.pc.cmake ${CMAKE_CURRENT_BINARY_DIR}/bullet${lib_type_suffix}.pc @ONLY)
+   	INSTALL(
+ 		FILES
+-		${CMAKE_CURRENT_BINARY_DIR}/bullet.pc
++		${CMAKE_CURRENT_BINARY_DIR}/bullet${lib_type_suffix}.pc
+ 		DESTINATION
+ 		${PKGCONFIG_INSTALL_PREFIX})
+ 	ENDIF(NOT MSVC)
+diff --git a/bullet.pc.cmake b/bullet.pc.cmake
+index 1630d29..e43d776 100644
+--- a/bullet.pc.cmake
++++ b/bullet.pc.cmake
+@@ -7,5 +7,5 @@ Name: bullet
+ Description: Bullet Continuous Collision Detection and Physics Library
+ Version: @BULLET_VERSION@
+ Requires:
+-Libs: -L${libdir} -lBulletSoftBody -lBulletDynamics -lBulletCollision -lLinearMath
++Libs: -L${libdir} -lBulletSoftBody@lib_type_suffix@ -lBulletDynamics@lib_type_suffix@ -lBulletCollision@lib_type_suffix@ -lLinearMath@lib_type_suffix@
+ Cflags: @BULLET_DOUBLE_DEF@ -I${includedir} -I${prefix}/include

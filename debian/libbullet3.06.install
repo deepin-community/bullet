@@ -1,0 +1,9 @@
+usr/lib/*/libBullet3Collision*.so.*
+usr/lib/*/libBullet3Common*.so.*
+usr/lib/*/libBullet3Dynamics*.so.*
+usr/lib/*/libBullet3Geometry*.so.*
+usr/lib/*/libBullet3OpenCL_clew*.so.*
+usr/lib/*/libBulletCollision*.so.*
+usr/lib/*/libBulletDynamics*.so.*
+usr/lib/*/libBulletSoftBody*.so.*
+usr/lib/*/libLinearMath*.so.*

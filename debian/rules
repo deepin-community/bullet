@@ -1,0 +1,64 @@
+#!/usr/bin/make -f
+#export DH_VERBOSE=1
+export DEB_BUILD_MAINT_OPTIONS = hardening=+all
+
+%:
+	dh $@ --buildsystem=cmake
+
+CONFIGURE_FLAGS := \
+		-DBUILD_SHARED_LIBS=on \
+		-DBUILD_EXTRAS=on \
+		-DBUILD_BULLET2_DEMOS=off \
+		-DBUILD_OPENGL3_DEMOS=off \
+		-DBUILD_CPU_DEMOS=off \
+		-DBUILD_UNIT_TESTS=off \
+		-DINSTALL_LIBS=on \
+		-DINSTALL_EXTRA_LIBS=on \
+		-DCMAKE_BUILD_TYPE=RelWithDebInfo \
+		-DLIB_SUFFIX=/$(DEB_HOST_MULTIARCH)
+
+override_dh_auto_configure:
+	dh_auto_configure -Bbuild-float32 -- \
+                -DUSE_DOUBLE_PRECISION=off \
+                $(CONFIGURE_FLAGS)
+	dh_auto_configure -Bbuild-float64 -- \
+                -DUSE_DOUBLE_PRECISION=on \
+                $(CONFIGURE_FLAGS)
+
+override_dh_auto_build-arch:
+	dh_auto_build -Bbuild-float32
+	dh_auto_build -Bbuild-float64
+override_dh_auto_test:
+	dh_auto_test -Bbuild-float32
+	dh_auto_test -Bbuild-float64
+
+# Libraries are namespaced, and headers are identical, so install everything to
+# the same place
+override_dh_auto_install-arch:
+	dh_auto_install -Bbuild-float32
+	dh_auto_install -Bbuild-float64
+
+override_dh_auto_install-indep:
+	# Let dh_install handle the installation of documentation files. Do not run
+	# dh_auto_install to prevent a FTBFS because we don't build any
+	# libraries here.
+
+override_dh_auto_build-indep:
+	# Build the documentation without TIMESTAMPS and make the build
+	# reproducible
+	( cat Doxyfile ; echo "HTML_TIMESTAMP=NO" ) | doxygen -
+	$(RM) -v html/*.md5 html/*.map
+	# De-duplication (http://wiki.debian.org/dedup.debian.net):
+	rdfind -outputname /dev/null -makesymlinks true html
+	symlinks -rsc html
+
+override_dh_compress:
+	dh_compress --exclude=.pdf
+
+override_dh_clean:
+	dh_clean
+	$(RM) doxygen_sqlite3.db
+	$(RM) -r html
+	$(RM) -r build-float32
+	$(RM) -r build-float64
+

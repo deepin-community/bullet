@@ -1,0 +1,4 @@
+do-not-build-with-embedded-tinyxml-library.patch
+0003-If-building-with-double-precision-namespace-all-libr.patch
+disable-Extra-modules.patch
+0004-CMake-definitions-use-the-namespaced-library-names.patch

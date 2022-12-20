@@ -1,0 +1,114 @@
+Source: bullet
+Section: libs
+Priority: optional
+Maintainer: Debian Games Team <pkg-games-devel@lists.alioth.debian.org>
+Uploaders:
+ Dima Kogan <dkogan@debian.org>,
+ Markus Koschany <apo@debian.org>
+Build-Depends:
+ cmake,
+ debhelper-compat (= 13),
+ libtinyxml2-dev
+Build-Depends-Indep:
+ doxygen,
+ graphviz,
+ rdfind,
+ symlinks
+Standards-Version: 4.5.0
+Homepage: http://www.bulletphysics.org/
+Vcs-Git: https://salsa.debian.org/games-team/bullet.git
+Vcs-Browser: https://salsa.debian.org/games-team/bullet
+
+Package: libbullet-dev
+Architecture: any
+Section: libdevel
+Multi-Arch: same
+Depends:
+ libbullet3.06 (= ${binary:Version}),
+ ${misc:Depends}
+Description: professional 3D Game Multiphysics Library -- development files
+ Bullet professional 3D Game Multiphysics Library provides state of the art
+ collision detection, soft body and rigid body dynamics.
+ .
+  * Used by many movie and game companies in AAA titles on Playstation 3, XBox
+    360, Nintendo Wii, PC, Android and iPhone.
+  * Modular extendible C++ design with hot-swap of most components.
+  * Discrete and continuous collision detection (CCD).
+  * Swept collision queries.
+  * Ray casting with custom collision filtering.
+  * Generic convex support (using GJK), capsule, cylinder, cone, sphere, box and
+    non-convex triangle meshes.
+  * Support for dynamic deformation of non-convex triangle meshes, by refitting
+    the acceleration structures.
+ .
+ Multiphysics support including:
+ .
+  * Rigid body dynamics including constraint solvers, generic constraints,
+    ragdolls, hinge, ball-socket.
+  * Support for constraint limits and motors.
+  * Soft body support including cloth, rope and deformable.
+  * Bullet is integrated into Blender.
+  * Serialization of physics data in the cross-platform binary bullet file
+    format.
+ .
+ This package contains development files for Bullet.
+
+Package: libbullet-doc
+Section: doc
+Architecture: all
+Depends:
+ libjs-jquery,
+ ${misc:Depends}
+Description: professional 3D Game Multiphysics Library -- documentation
+ Bullet professional 3D Game Multiphysics Library provides state of the art
+ collision detection, soft body and rigid body dynamics.
+ .
+ This package contains the Bullet API documentation and the Bullet Quick Start
+ Guide.
+ .
+ For more information about Bullet, please refer to the libbullet-dev package.
+
+Package: libbullet-extras-dev
+Architecture: any
+Section: libdevel
+Multi-Arch: same
+Depends:
+ libbullet-extras3.06 (= ${binary:Version}),
+ ${misc:Depends}
+Description: professional 3D Game Multiphysics Library -- extra development
+ Bullet professional 3D Game Multiphysics Library provides state of the art
+ collision detection, soft body and rigid body dynamics.
+ .
+ This package contains extra development files for Bullet.
+ .
+ For more information about Bullet, please refer to the libbullet-dev package.
+
+Package: libbullet-extras3.06
+Architecture: any
+Multi-Arch: same
+Depends:
+ ${misc:Depends},
+ ${shlibs:Depends}
+Description: professional 3D Game Multiphysics Library -- extra libraries
+ Bullet professional 3D Game Multiphysics Library provides state of the art
+ collision detection, soft body and rigid body dynamics.
+ .
+ This package contains all extra shared runtime libraries for Bullet including
+ HACD, GIMPACTUtils, InverseDynamics, Serialize, ConvexDecomposition and VHACD.
+ .
+ For more information about Bullet, please refer to the libbullet-dev package.
+
+Package: libbullet3.06
+Architecture: any
+Multi-Arch: same
+Depends:
+ ${misc:Depends},
+ ${shlibs:Depends}
+Description: professional 3D Game Multiphysics Library
+ Bullet professional 3D Game Multiphysics Library provides state of the art
+ collision detection, soft body and rigid body dynamics.
+ .
+ This package contains shared runtime libraries including BulletCollision,
+ BulletDynamics, BulletSoftbody, LinearMath and all Bullet 3 libraries.
+ .
+ For more information about Bullet, please refer to the libbullet-dev package.

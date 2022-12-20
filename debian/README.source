@@ -1,0 +1,14 @@
+Bullet for Debian
+=================
+
+The data and examples directories were removed from the original tarball.
+We don't build the examples and reviewing countless files for each new
+release is tedious. I prefer to support the essential part, the libraries,
+only.
+
+The removed pdf files cannot be modified and no source files were provided. See
+Debian bug #725493 for more information.
+
+If you are interested in those files and want to build the examples, you can
+easily recreate the original sources by removing the Files-Excluded lines in
+debian/copyright and using uscan.

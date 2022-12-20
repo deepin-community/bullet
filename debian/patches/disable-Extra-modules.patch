@@ -1,0 +1,18 @@
+From: Markus Koschany <apo@debian.org>
+Date: Fri, 16 Oct 2020 00:47:34 +0200
+Subject: disable-Extra-modules
+
+---
+ Extras/CMakeLists.txt | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/Extras/CMakeLists.txt b/Extras/CMakeLists.txt
+index fc0d226..91610d6 100644
+--- a/Extras/CMakeLists.txt
++++ b/Extras/CMakeLists.txt
+@@ -1,4 +1,4 @@
+-SUBDIRS( InverseDynamics BulletRoboticsGUI BulletRobotics obj2sdf Serialize ConvexDecomposition HACD GIMPACTUtils )
++SUBDIRS( InverseDynamics Serialize ConvexDecomposition HACD GIMPACTUtils )
+ 
+ 
+ 

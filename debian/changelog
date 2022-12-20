@@ -1,0 +1,318 @@
+bullet (3.06+dfsg-deepin1) unstable; urgency=medium
+
+  * Rebuild
+
+ -- Deepin Packages Builder <packages@deepin.org>  Fri, 11 Nov 2022 17:55:59 +0800
+
+bullet (3.06+dfsg-4) unstable; urgency=medium
+
+  * Drop unused Build-Depends: freeglut3-dev, python3, python3-dev, and
+    zlib1g-dev. Thanks to Helmut Grohne for the patch. (Closes: #981719)
+
+ -- Markus Koschany <apo@debian.org>  Sun, 07 Feb 2021 23:32:14 +0100
+
+bullet (3.06+dfsg-3) unstable; urgency=medium
+
+  * Override dh_auto_install-indep to prevent a FTBFS since we don't build any
+    libraries here.
+
+ -- Markus Koschany <apo@debian.org>  Sun, 18 Oct 2020 15:20:03 +0200
+
+bullet (3.06+dfsg-2) unstable; urgency=medium
+
+  * Upload to unstable.
+
+ -- Markus Koschany <apo@debian.org>  Sun, 18 Oct 2020 14:07:28 +0200
+
+bullet (3.06+dfsg-1) experimental; urgency=medium
+
+  * New upstream version 3.06+dfsg.
+  * Switch to debhelper-compat = 13.
+  * Rename the binary packages because of the SONAME bump.
+
+ -- Markus Koschany <apo@debian.org>  Fri, 16 Oct 2020 00:44:08 +0200
+
+bullet (2.89+dfsg-1) experimental; urgency=medium
+
+  * New upstream version 2.89+dfsg.
+  * Declare compliance with Debian Policy 4.5.0.
+  * Rename binary packages to 2.89 because of the SONAME bump.
+
+ -- Markus Koschany <apo@debian.org>  Fri, 31 Jan 2020 00:49:09 +0100
+
+bullet (2.88+dfsg-2) unstable; urgency=medium
+
+  * Upload to unstable.
+  * Declare compliance with Debian Policy 4.4.1.
+
+ -- Markus Koschany <apo@debian.org>  Sat, 12 Oct 2019 16:52:46 +0200
+
+bullet (2.88+dfsg-1) experimental; urgency=medium
+
+  * New upstream version 2.88+dfsg.
+  * Rename packages because of the SONAME bump.
+  * Switch to debhelper-compat = 12.
+  * Declare compliance with Debian Policy 4.4.0.
+  * d/control: Build-depend on libtinyxml2-dev.
+  * Update do-not-build-with-embedded-tinyxml-library.patch
+
+ -- Markus Koschany <apo@debian.org>  Sun, 01 Sep 2019 01:47:27 +0200
+
+bullet (2.87+dfsg-3) unstable; urgency=medium
+
+  [ Dima Kogan ]
+  * Vcs tags point to salsa
+  * Build the float64 AND float32 libraries.
+    Ship the same set of packages, but they contain both flavors.
+    The library names are namespaced. The headers are not. The user
+    must set a #define to select the double-precision flavor
+
+  [ Markus Koschany ]
+  * Declare compliance with Debian Policy 4.2.1.
+  * Update copyright years.
+
+ -- Markus Koschany <apo@debian.org>  Wed, 31 Oct 2018 13:15:04 +0100
+
+bullet (2.87+dfsg-2) unstable; urgency=medium
+
+  * Upload to unstable.
+  * Switch to compat level 11.
+  * Declare compliance with Debian Policy 4.1.2.
+
+ -- Markus Koschany <apo@debian.org>  Wed, 27 Dec 2017 18:09:22 +0100
+
+bullet (2.87+dfsg-1) experimental; urgency=medium
+
+  * New upstream version 2.87+dfsg.
+  * Use dh_missing override instead of dh_install.
+  * Declare compliance with Debian Policy 4.1.1.
+  * Exclude pybullet pdf because we don't have the source for it.
+  * Rename binary packages because of the SONAME bump.
+  * New build-dependencies: python3 and python3-dev.
+  * Remove data and examples directory completely because we don't build the
+    examples. It is tedious to check the copyright for files which are not
+    actively used and supported later.
+  * Add disable-Extra-modules.patch. BulletRobotics and obj2sdf are currently
+    not supported.
+  * Add README.source and explain why we repack the tarball.
+
+ -- Markus Koschany <apo@debian.org>  Sat, 07 Oct 2017 17:30:13 +0200
+
+bullet (2.86.1+dfsg-2) unstable; urgency=medium
+
+  * Upload to unstable.
+  * Declare compliance with Debian Policy 4.0.0.
+  * Use https for Format field.
+
+ -- Markus Koschany <apo@debian.org>  Mon, 17 Jul 2017 17:29:30 +0200
+
+bullet (2.86.1+dfsg-1) experimental; urgency=medium
+
+  * New upstream version 2.86.1+dfsg.
+  * Update debian/copyright for new release.
+  * Rename binary packages because of the SONAME bump.
+
+ -- Markus Koschany <apo@debian.org>  Tue, 21 Feb 2017 02:37:35 +0100
+
+bullet (2.86+dfsg-1) experimental; urgency=medium
+
+  * New upstream version 2.86+dfsg.
+  * Update debian/copyright for new release.
+
+ -- Markus Koschany <apo@debian.org>  Thu, 09 Feb 2017 06:00:16 +0100
+
+bullet (2.85.1+dfsg-1) experimental; urgency=medium
+
+  * New upstream version 2.85.1+dfsg-1.
+  * Create new 2.85 binary packages because of the SONAME bump.
+  * Simplify the packaging and provide libbullet2.85 which includes all Bullet
+    2 and Bullet 3 core libraries from now on and libbullet-extras2.85 for all
+    extras.
+  * Export DEB_BUILD_MAINT_OPTIONS = hardening=+all.
+  * Update debian/copyright for new release.
+
+ -- Markus Koschany <apo@debian.org>  Mon, 26 Dec 2016 19:45:01 +0100
+
+bullet (2.83.7+dfsg-5) unstable; urgency=medium
+
+  * Add Breaks and Replaces against version 2.83.6 to ensure that
+    upgrades from Stretch to Sid work as expected.
+    Thanks to Ralf Treinen for the report. (Closes: #839887)
+
+ -- Markus Koschany <apo@debian.org>  Thu, 06 Oct 2016 14:50:52 +0200
+
+bullet (2.83.7+dfsg-4) unstable; urgency=medium
+
+  * Upload to unstable.
+  * Start Bullet 2.83.7 transition.
+  * debian/watch: Use version=4.
+
+ -- Markus Koschany <apo@debian.org>  Wed, 05 Oct 2016 14:46:57 +0200
+
+bullet (2.83.7+dfsg-3) experimental; urgency=medium
+
+  * Declare compliance with Debian Policy 3.9.8.
+  * Switch to compat level 10.
+  * Vcs-Git: Use https.
+  * Create new 2.83.7 binary packages and prepare for transition.
+
+ -- Markus Koschany <apo@debian.org>  Thu, 29 Sep 2016 15:48:17 +0200
+
+bullet (2.83.7+dfsg-2) experimental; urgency=medium
+
+  * Do not execute dh_auto_test in indep target to prevent a FTBFS when
+    building source only packages.
+
+ -- Markus Koschany <apo@debian.org>  Thu, 14 Jan 2016 19:19:16 +0100
+
+bullet (2.83.7+dfsg-1) experimental; urgency=medium
+
+  * Imported Upstream version 2.83.7+dfsg.
+  * Drop libbullet2.83-dbg and use -dbgsym packages from now on.
+
+ -- Markus Koschany <apo@debian.org>  Thu, 14 Jan 2016 15:36:26 +0100
+
+bullet (2.83.6+dfsg-3) unstable; urgency=medium
+
+  * Upload to unstable.
+  * Start Bullet 2.83.6 transition. (Closes: #801914)
+
+ -- Markus Koschany <apo@debian.org>  Wed, 11 Nov 2015 16:59:06 +0100
+
+bullet (2.83.6+dfsg-2) experimental; urgency=medium
+
+  * Rename libraries due to a backward-incompatible ABI change without a soname
+    change that occured from 2.83.5 to 2.83.6. Add Breaks and Replaces against
+    the old version.
+  * Update my e-mail address.
+
+ -- Markus Koschany <apo@debian.org>  Mon, 09 Nov 2015 11:28:16 +0100
+
+bullet (2.83.6+dfsg-1) unstable; urgency=medium
+
+  * Imported Upstream version 2.83.6+dfsg.
+  * Update copyright for new release. Add new BSD-3 licensed file.
+
+ -- Markus Koschany <apo@gambaru.de>  Sun, 06 Sep 2015 17:18:03 +0200
+
+bullet (2.83.5+dfsg-2) unstable; urgency=medium
+
+  * Team upload.
+  * Rename libraries for C++ ABI transition (Closes: #790988)
+  * Build-depend on a version of libtinyxml-dev that has started
+    the same transition
+  * Vcs-Browser: use https
+
+ -- Simon McVittie <smcv@debian.org>  Thu, 20 Aug 2015 09:08:45 +0100
+
+bullet (2.83.5+dfsg-1) unstable; urgency=medium
+
+  * New upstream release.
+  * debian/copyright: Add SCEA Shared Source License 1.0
+    and mention files which are partly copyrighted by Elsevier Inc.
+    Thanks to Thorsten Alteholz for the report. (Closes: #792839)
+  * get-orig-source: Add --download-current-version option to uscan.
+
+ -- Markus Koschany <apo@gambaru.de>  Sun, 19 Jul 2015 13:40:15 +0200
+
+bullet (2.83.4+dfsg-1) unstable; urgency=medium
+
+  [ Markus Koschany ]
+  * Imported Upstream version 2.83.4+dfsg.
+  * Update debian/copyright for new release and use Files-Excluded mechanism to
+    repack the source tarball. Remove all files without source and additional
+    third party libraries which are already packaged for Debian and create a
+    DFSG-free source tarball.
+  * Rename all binary packages for version 2.83.
+  * debian/rules:
+    - Build the documentation without timestamps and make the build
+      reproducible.
+    - Remove doxygen_sqlite3.db in clean target, so that Bullet can be built
+      twice in a row.
+  * Remove source/options file because xz compression is the default now.
+  * debian/control:
+    - debian/control: Remove all Pre-Depends fields. They are obsolete now.
+    - libbullet-doc: Depend on libjs-jquery and symlink jquery.js.
+
+  [ Bret Curtis ]
+  * Update debian/watch for new release. Bullet has moved to Github.
+  * Drop do-not-build-with-embedded-glui-library.patch. Fixed upstream.
+  * debian/control: Switch Vcs-Browser field to cgit.
+  * debian/control: Rename all packages for version 2.83.
+  * Bump Standards-Version to 3.9.6, no changes.
+
+ -- Markus Koschany <apo@gambaru.de>  Sat, 09 May 2015 11:56:22 +0200
+
+bullet (2.82-r2704+dfsg-2) unstable; urgency=medium
+
+  * Upload to unstable.
+  * Update copyright years.
+
+ -- Markus Koschany <apo@gambaru.de>  Tue, 25 Mar 2014 14:29:21 +0100
+
+bullet (2.82-r2704+dfsg-1) experimental; urgency=low
+
+  * [d23f55a] Imported Upstream version 2.82-r2704+dfsg
+  * [378223c] Update get-orig-source target for new upstream release.
+  * [29f37ad] Rename all files to 2.82 because of the usual SONAME change.
+  * [b6b39a5] debian/control: Rename all binary packages from 2.81 to 2.82.
+  * [54b5c87] Update copyright years. Add a new contributor.
+  * [f7bc2d2] Update homepage field to org address.
+  * [388b5b7] Bump Standards-Version to 3.9.5, no changes.
+
+ -- Markus Koschany <apo@gambaru.de>  Fri, 01 Nov 2013 11:15:43 +0100
+
+bullet (2.81-rev2613+dfsg2-1) unstable; urgency=low
+
+  * [f3ab74c] Imported Upstream version 2.81-rev2613+dfsg2
+    - Repack Bullet and remove ParticlesOpenCL demo. It is not clear whether
+      ParticlesOCL.cl can be distributed under the Zlib license. Since upstream
+      recommends to use the particle demo from Bullet 3.x anyway, the
+      ParticlesOpenCL directory is removed from the sources. Thanks to bastien
+      ROUCARIES for the report. (Closes: #724905)
+
+ -- Markus Koschany <apo@gambaru.de>  Sun, 29 Sep 2013 21:02:56 +0200
+
+bullet (2.81-rev2613+dfsg-3) unstable; urgency=low
+
+  * [52a6675] debian/control: Move graphviz and doxygen to Indep.
+    graphviz and doxygen are only required to build the arch:all documentation.
+  * [b3a4b8a] Build the documentation only in the indep target.
+    This avoids a FTBFS on armel and is less wasteful for the buildd.
+  * [2c225f2] Really use canonical Vcs-URI.
+  * [16530ab] get-orig-source: produce identical tarballs.
+  * [fc8a3e6] debian/rules: Remove override for dh_builddeb
+    xz is the default compressor now
+  * [c2c8f49] Use symlinks and rdfind for deduplication of files.
+  * [46f4996] Clean up md5, map and html files in libbullet-doc.
+    Thanks to Dmitry Smirnov for the patch.
+  * [b8f7e5b] Improve get-orig-source target.
+    Add an error handler to the get-orig-source target. This is to avoid
+    extracting the orig.tar file to an existing directory.
+  * [f59314d] Ensure that bullet can be built twice.
+    Remove html files in dh_clean target because dpkg-source cannot represent
+    the changes to those html files.
+  * [52c9c25] debian/rules: Do not use -Wl, --as-needed anymore. Apparently
+    this option is too aggressive and also prevents that libgimpactutils is
+    dynamically linked against libc6.
+
+ -- Markus Koschany <apo@gambaru.de>  Sat, 10 Aug 2013 13:50:28 +0200
+
+bullet (2.81-rev2613+dfsg-2) unstable; urgency=low
+
+  * [5d413e4] debian/rules: Do not overwrite dh_auto_install anymore.
+  * [7c09b54] libbullet-dev.install: Install missing include header files.
+  * [dfd842e] Drop libglui-dev from Build-Depends.
+    The library is only needed for the Bullet demos. Since we do not use the
+    demos anyway, dropping libglui-dev is acceptable.
+  * [7b1d794] Drop change-glui-include-path.patch.
+
+ -- Markus Koschany <apo@gambaru.de>  Sun, 21 Apr 2013 16:00:25 +0200
+
+bullet (2.81-rev2613+dfsg-1) unstable; urgency=low
+
+  * Initial release.
+    Thanks to Wen-Yen Chuang, Paul Wise and Gonéri Le Bouder for their
+    contributions to the initial packaging work. (Closes: #476284)
+
+ -- Markus Koschany <apo@gambaru.de>  Mon, 25 Mar 2013 00:03:02 +0100

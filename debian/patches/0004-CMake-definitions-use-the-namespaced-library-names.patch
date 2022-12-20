@@ -1,0 +1,58 @@
+From: Markus Koschany <apo@debian.org>
+Date: Fri, 16 Oct 2020 00:53:28 +0200
+Subject: 0004-CMake-definitions-use-the-namespaced-library-names
+
+---
+ BulletConfig.cmake.in |  2 +-
+ CMakeLists.txt        | 17 ++++++++---------
+ 2 files changed, 9 insertions(+), 10 deletions(-)
+
+diff --git a/BulletConfig.cmake.in b/BulletConfig.cmake.in
+index f5dc7bd..f04f7ad 100644
+--- a/BulletConfig.cmake.in
++++ b/BulletConfig.cmake.in
+@@ -16,7 +16,7 @@
+ 
+ set ( BULLET_FOUND 1 )
+ set ( BULLET_USE_FILE     "@BULLET_USE_FILE@" )
+-set ( BULLET_DEFINITIONS  "@BULLET_DEFINITIONS@" )
++set ( BULLET_DEFINITIONS  "@BULLET_DOUBLE_DEF@" )
+ set ( BULLET_INCLUDE_DIR  "@INCLUDE_INSTALL_DIR@" )
+ set ( BULLET_INCLUDE_DIRS "@INCLUDE_INSTALL_DIR@" )
+ set ( BULLET_LIBRARIES    "@BULLET_LIBRARIES@" )
+diff --git a/CMakeLists.txt b/CMakeLists.txt
+index 55e62ea..f8c42aa 100644
+--- a/CMakeLists.txt
++++ b/CMakeLists.txt
+@@ -563,23 +563,22 @@ IF (BUILD_UNIT_TESTS)
+ ENDIF()
+ 
+ set (BULLET_CONFIG_CMAKE_PATH lib${LIB_SUFFIX}/cmake/bullet )
+-list (APPEND BULLET_DEFINITIONS ${BULLET_DOUBLE_DEF})
+-list (APPEND BULLET_LIBRARIES LinearMath)
+-list (APPEND BULLET_LIBRARIES Bullet3Common)
+-list (APPEND BULLET_LIBRARIES BulletInverseDynamics)
+-list (APPEND BULLET_LIBRARIES BulletCollision)
+-list (APPEND BULLET_LIBRARIES BulletDynamics)
+-list (APPEND BULLET_LIBRARIES BulletSoftBody)
++list (APPEND BULLET_LIBRARIES LinearMath${lib_type_suffix})
++list (APPEND BULLET_LIBRARIES Bullet3Common${lib_type_suffix})
++list (APPEND BULLET_LIBRARIES BulletInverseDynamics${lib_type_suffix})
++list (APPEND BULLET_LIBRARIES BulletCollision${lib_type_suffix})
++list (APPEND BULLET_LIBRARIES BulletDynamics${lib_type_suffix})
++list (APPEND BULLET_LIBRARIES BulletSoftBody${lib_type_suffix})
+ set (BULLET_USE_FILE ${BULLET_CONFIG_CMAKE_PATH}/UseBullet.cmake)
+ configure_file 	( ${CMAKE_CURRENT_SOURCE_DIR}/BulletConfig.cmake.in
+-					${CMAKE_CURRENT_BINARY_DIR}/BulletConfig.cmake
++					${CMAKE_CURRENT_BINARY_DIR}/BulletConfig${lib_type_suffix}.cmake
+ 					@ONLY ESCAPE_QUOTES
+ 				)
+ OPTION(INSTALL_CMAKE_FILES "Install generated CMake files" ON)
+ 
+ IF (INSTALL_CMAKE_FILES)
+ 	install ( FILES ${CMAKE_CURRENT_SOURCE_DIR}/UseBullet.cmake
+-		${CMAKE_CURRENT_BINARY_DIR}/BulletConfig.cmake
++		${CMAKE_CURRENT_BINARY_DIR}/BulletConfig${lib_type_suffix}.cmake
+ 		DESTINATION ${BULLET_CONFIG_CMAKE_PATH}
+ 	)
+ ENDIF (INSTALL_CMAKE_FILES)
